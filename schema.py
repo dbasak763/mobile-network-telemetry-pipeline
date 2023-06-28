@@ -1,6 +1,7 @@
 schema = {
     "type": "object",
     "properties": {
+        "ip-address": {"type": "string", "format": "ipv4"},
         "device_information": {
             "type": "object",
             "properties": {
@@ -23,10 +24,9 @@ schema = {
                     },
                     "required": ["latitude", "longitude", "altitude", "accuracy"]
                 },
-                "ipaddress": {"type": "string", "format": "ipv4"},
                 "timestamp": {"type": "string", "format": "date-time"}
             },
-            "required": ["device_info", "location", "ipaddress", "timestamp"]
+            "required": ["device_info", "location", "timestamp"]
         },
         "lte_params": {
             "type": "object",
@@ -49,6 +49,5 @@ schema = {
             "required": ["mcc", "mnc", "band", "Fc", "EarFcn", "TimeAdv", "tac", "eci", "pci", "rsrp", "rsrq", "rssi", "snr", "cqi"]
         }
     },
-    "required": ["device_information", "lte_params"]
+    "required": ["ip-address", "device_information", "lte_params"]
 }
-
