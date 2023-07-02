@@ -1,0 +1,36 @@
+How To Get Grafana Running
+
+
+-kubectl get pods
+-kubectl get services
+-helm repo add grafana https://grafana.github.io/helm-charts
+-helm repo update
+-helm install my-grafana grafana/grafana --values ~/values.yaml --namespace default - Used to deploy a Helm chart onto Kubernetes cluster
+-kubectl --namespace default port-forward $POD_NAME 3000
+-Login(User Login: admin, User Password: grafanauserlogin)
+
+How To get Prometheus Running
+
+1. Helm command - to add repository
+2. Helm command - install the helm chart
+3. 
+
+-gcloud init
+-gcloud container clusters get-credentials demo-cluster --zone us-central1-c
+-kubectl get all
+-kubectl get pods --all-namespaces | grep prometheus
+-kubectl port-forward -n default $POD_NAME 9090:9090
+
+How To Patch Own Version of prometheus.yml to prometheus deployment(Prometheus is read-only)
+
+kubectl delete configmap prometheus-config
+
+kubectl create configmap prometheus-config --from-file=./prometheus.yml
+
+kubectl get configmaps
+kubectl get deployments
+
+kubectl patch deployment my-prometheus-server -p '{"spec":{"template":{"spec":{"volumes":[{"name":"config-volume","configMap":{"name":"prometheus-config"}}]}}}}'
+
+/*The kubectl patch deployment command with the provided patch data is used to add a volume to the pod template of the Prometheus server deployment. This volume is named "config-volume" and is populated from the ConfigMap named "prometheus-config". This allows the Prometheus server to access the updated configuration stored in the ConfigMap.
+*/
