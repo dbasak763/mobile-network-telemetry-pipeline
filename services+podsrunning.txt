@@ -10,3 +10,16 @@ my-prometheus-prometheus-pushgateway             ClusterIP      10.116.11.204   
 my-prometheus-server                             ClusterIP      10.116.8.80     <none>          80/TCP         18d
 my-python-app-helm-release-my-python-app-chart   ClusterIP      10.116.10.120   <none>          80/TCP         16d
 my-python-app-service                            LoadBalancer   10.116.6.50     35.232.205.68   80:30115/TCP   12d
+
+kubectl get pods
+NAME                                                              READY   STATUS    RESTARTS   AGE
+my-grafana-5bc9b7fcc8-mg7ff                                       1/1     Running   0          3d4h
+my-prometheus-alertmanager-0                                      1/1     Running   0          3d4h
+my-prometheus-kube-state-metrics-5b95c4b4f5-p9qft                 1/1     Running   0          3d4h
+my-prometheus-prometheus-node-exporter-fbhj8                      1/1     Running   0          3d4h
+my-prometheus-prometheus-node-exporter-j95wc                      1/1     Running   0          3d4h
+my-prometheus-prometheus-node-exporter-zcj5x                      1/1     Running   0          3d4h
+my-prometheus-prometheus-pushgateway-54cd8c54f5-h7t26             1/1     Running   0          3d4h
+my-prometheus-server-589479b467-78fqs                             2/2     Running   0          3d4h
+my-python-app-helm-release-my-python-app-chart-7c697cd959-js9vx   1/1     Running   0          3d4h
+my-python-app-helm-release-my-python-app-chart-7c697cd959-vgflb   1/1     Running   0          3d4h
