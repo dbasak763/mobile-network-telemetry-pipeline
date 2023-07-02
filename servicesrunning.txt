@@ -1,0 +1,12 @@
+kubectl get services
+NAME                                             TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
+kubernetes                                       ClusterIP      10.116.0.1      <none>          443/TCP        19d
+my-grafana                                       ClusterIP      10.116.14.58    <none>          80/TCP         17d
+my-prometheus-alertmanager                       ClusterIP      10.116.12.25    <none>          9093/TCP       18d
+my-prometheus-alertmanager-headless              ClusterIP      None            <none>          9093/TCP       18d
+my-prometheus-kube-state-metrics                 ClusterIP      10.116.11.176   <none>          8080/TCP       18d
+my-prometheus-prometheus-node-exporter           ClusterIP      10.116.7.238    <none>          9100/TCP       18d
+my-prometheus-prometheus-pushgateway             ClusterIP      10.116.11.204   <none>          9091/TCP       18d
+my-prometheus-server                             ClusterIP      10.116.8.80     <none>          80/TCP         18d
+my-python-app-helm-release-my-python-app-chart   ClusterIP      10.116.10.120   <none>          80/TCP         16d
+my-python-app-service                            LoadBalancer   10.116.6.50     35.232.205.68   80:30115/TCP   12d
