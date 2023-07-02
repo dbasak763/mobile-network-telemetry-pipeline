@@ -34,3 +34,8 @@ kubectl patch deployment my-prometheus-server -p '{"spec":{"template":{"spec":{"
 
 /*The kubectl patch deployment command with the provided patch data is used to add a volume to the pod template of the Prometheus server deployment. This volume is named "config-volume" and is populated from the ConfigMap named "prometheus-config". This allows the Prometheus server to access the updated configuration stored in the ConfigMap.
 */
+Example of Building and Pushing DockerImage To Container(Do this within my-python-app folder)
+docker build -t gcr.io/soy-vision-389617/my-python-app-server:v2 .
+docker push gcr.io/soy-vision-389617/my-python-app-server:v2
+//change image name+tag in deployment.yaml to be v2
+kubectl apply -f deployment.yaml 
