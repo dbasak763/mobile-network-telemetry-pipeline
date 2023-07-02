@@ -11,9 +11,10 @@ How To Get Grafana Running
 
 How To get Prometheus Running
 
-1. Helm command - to add repository
-2. Helm command - install the helm chart
-3. 
+-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+-helm repo update
+-helm install prometheus prometheus-community/prometheus
+
 
 -gcloud init
 -gcloud container clusters get-credentials demo-cluster --zone us-central1-c
