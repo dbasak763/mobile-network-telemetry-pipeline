@@ -50,7 +50,6 @@ def receive_data():
     gauge_metric.labels(ipaddress=ip_address, param='rssi').set(float(lte_params['rssi']))
     gauge_metric.labels(ipaddress=ip_address, param='snr').set(float(lte_params['snr']))
     gauge_metric.labels(ipaddress=ip_address, param='cqi').set(float(lte_params['cqi']))
-    # Set other numerical values using gauge_metric.labels().set()
 
     # Set the info metric values with labels
     info_metric.labels(ipaddress=ip_address, param='model').info({'value': device_info['model']})
@@ -63,7 +62,6 @@ def receive_data():
     info_metric.labels(ipaddress=ip_address, param='band').info({'value': lte_params['band']})
     info_metric.labels(ipaddress=ip_address, param='tac').info({'value': lte_params['tac']})
     info_metric.labels(ipaddress=ip_address, param='eci').info({'value': lte_params['eci']})
-    # Set other string values using info_metric.labels().info()
 
     # Push all metrics to the Pushgateway
     push_to_gateway('10.116.11.204:9091', job='my-flask-app', registry=registry)
