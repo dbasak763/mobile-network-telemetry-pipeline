@@ -42,7 +42,7 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-
+//need to create a separate class to handle stateful behavior
 class _MyHomePageState extends State<MyHomePage> {
   String _cellInfo = "";
   int rsrpDisplayedForServingCell = -140; // Default RSRP value
