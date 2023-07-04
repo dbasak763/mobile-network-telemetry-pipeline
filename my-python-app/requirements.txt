@@ -1,0 +1,4 @@
+Flask==2.0.1
+prometheus-flask-exporter==0.18.2
+prometheus_client==0.14.1
+jsonschema==4.16.0
