@@ -34,6 +34,9 @@ class MyApp extends StatelessWidget {
   }
 }
 //MyHomePage is stateful widget that represents main page of app
+//To implement stateful widget, need to define two classes: the widget class itself and its associated state class. 
+//The widget class (MyHomePage) is responsible for building the UI and handling user interactions, 
+//while the state class (_MyHomePageState) manages the mutable state and triggers UI updates when necessary.
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
