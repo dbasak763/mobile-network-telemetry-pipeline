@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyHomePage(title: 'Highway9 Mobile App'),
     );
+    //creates a MaterialApp Widget which sets theme and layout of app
   }
 }
 
