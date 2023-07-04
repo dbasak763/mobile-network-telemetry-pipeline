@@ -198,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
         currentDBM += 'Latitude: $_latitude\nLongitude: $_longitude\n\n';
       }
     }
-
+    //notify Flutter framework that internal state has changed, so rebuild to reflect changes in UI
     setState(() {
       _cellInfo = currentDBM;
     });
