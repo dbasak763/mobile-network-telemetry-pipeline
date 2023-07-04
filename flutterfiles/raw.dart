@@ -1,8 +1,13 @@
 import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cell_info/models/common/cell_type.dart';
 import 'package:device_info/device_info.dart';
 import 'package:intl/intl.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Raw extends StatefulWidget {
   final List<CellType> primaryCellList;
@@ -30,6 +35,21 @@ class _RawState extends State<Raw> {
   String? deviceId;
   String? ipAddress;
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  bool isInAirplaneMode = false;
+
+  Future<bool> isAirplaneModeOn() async {
+    final status = await Permission.phone.status;
+    if (!status.isGranted) {
+      final result = await Permission.phone.request();
+      if (result.isDenied || result.isPermanentlyDenied) {
+        // Permission denied, handle accordingly
+        return false;
+      }
+    }
+
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    return connectivityResult == ConnectivityResult.none;
+  }
 
   @override
   void didChangeDependencies() {
@@ -48,6 +68,20 @@ class _RawState extends State<Raw> {
           ipAddress = value;
         });
       });
+    }
+
+    checkAirplaneMode();
+
+  }
+
+  void checkAirplaneMode() async {
+    final isOn = await isAirplaneModeOn();
+    setState(() {
+      isInAirplaneMode = isOn;
+    });
+
+    if (isOn) {
+      Fluttertoast.showToast(msg: 'IN AIRPLANE MODE');
     }
   }
 
@@ -80,7 +114,6 @@ class _RawState extends State<Raw> {
                     );
                   },
                 ),
-
                 SizedBox(height: 8),
               ],
             ),
@@ -100,19 +133,29 @@ class _RawState extends State<Raw> {
         ),
         _buildDeviceInfoTable(context),
         SizedBox(height: 8),
-        Text(
-          'Serving Cell:',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        if (widget.primaryCellList.isEmpty)
-          Text('No serving cell found.'),
-        if (widget.primaryCellList.isNotEmpty)
-          _buildCellTable(context, widget.primaryCellList),
-        Text(
-          'Neighboring Cells:',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        _buildCellTable(context, widget.neighboringCellList),
+        if (!isInAirplaneMode)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Serving Cell:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              if (widget.primaryCellList.isEmpty) Text('No serving cell found.'),
+              if (widget.primaryCellList.isNotEmpty)
+                _buildCellTable(context, widget.primaryCellList),
+              Text(
+                'Neighboring Cells:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              _buildCellTable(context, widget.neighboringCellList),
+            ],
+          ),
+        if (isInAirplaneMode)
+          Text(
+            'In Airplane Mode',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
       ],
     );
   }
@@ -230,8 +273,9 @@ class _RawState extends State<Raw> {
     );
   }
 
- //Use this _buildCellTable version instead that actually displays table
+  //Use this _buildCellTable version instead that actually displays table
   Widget _buildCellTable(BuildContext context, List<CellType> cellList) {
+    bool printEmpty = true;
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -239,6 +283,7 @@ class _RawState extends State<Raw> {
       itemBuilder: (context, index) {
         CellType cell = cellList[index];
         String band = cell.lte?.bandLTE?.number?.toString() ?? '';
+        print('Band: $band');
         String earfcn = cell.lte?.bandLTE?.downlinkEarfcn?.toString() ?? '';
         String tac = cell.lte?.tac?.toString() ?? '';
         String eci = cell.lte?.eci?.toString() ?? '';
@@ -253,11 +298,17 @@ class _RawState extends State<Raw> {
         String snr = cell.lte?.signalLTE?.snr?.toString() ?? '';
         String timeadv = cell.lte?.signalLTE?.timingAdvance?.toString() ?? '';
         String freqStr = '';
-        if (int.parse(band) == 48) {
-          double freq = (double.parse(earfcn) - 55240) / 10 + 3550;
-          freqStr = freq.toStringAsFixed(1);
+        String fc = '';
+        if (band.isNotEmpty) {
+          if (int.parse(band) == 48) {
+            double freq = (double.parse(earfcn) - 55240) / 10 + 3550;
+            freqStr = freq.toStringAsFixed(1);
+          }
+          fc = freqStr.toString();
+        } else {
+          return Text('');
         }
-        String fc = freqStr.toString();
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -474,3 +525,4 @@ class _RawState extends State<Raw> {
     return 'Unknown';
   }
 }
+
