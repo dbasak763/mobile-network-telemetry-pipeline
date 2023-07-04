@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return lteParams;
   }
-
+  //marked async because involves fetching user location as stream of updates
   void _setUserLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
