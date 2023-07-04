@@ -16,7 +16,7 @@ import 'package:http/http.dart' as http;
 void main() { //entry point of program
   runApp(const MyApp());
 }
-
+//MyApp is stateless widget so its properties cannot be changed once set
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
