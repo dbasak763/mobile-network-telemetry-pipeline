@@ -104,7 +104,10 @@ class _RawState extends State<Raw> {
           'Serving Cell:',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        _buildCellTable(context, widget.primaryCellList),
+        if (widget.primaryCellList.isEmpty)
+          Text('No serving cell found.'),
+        if (widget.primaryCellList.isNotEmpty)
+          _buildCellTable(context, widget.primaryCellList),
         Text(
           'Neighboring Cells:',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
