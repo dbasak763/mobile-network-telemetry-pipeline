@@ -141,7 +141,10 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         });
   }
-
+  //marked async because involves operations such as requesting permissions, 
+  //fetching cell information from the device, 
+  //waiting for location values, 
+  //and sending data to an API
   void _setCellsInfo() async {
     final status = await Permission.location.request();
     final phoneStatus = await Permission.phone.request();
