@@ -204,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  void initState() {
+  void initState() { //called once during lifetime of widget at beginning 
     super.initState();
     _setUserLocation();
     _setCellsInfo();
