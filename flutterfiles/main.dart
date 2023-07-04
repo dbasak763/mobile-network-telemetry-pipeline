@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     //creates a MaterialApp Widget which sets theme and layout of app
   }
 }
-
+//MyHomePage is stateful widget that represents main page of app
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
