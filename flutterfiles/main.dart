@@ -221,7 +221,8 @@ class _MyHomePageState extends State<MyHomePage> {
     _locationSubscription?.cancel();
     super.dispose();
   }
-
+  //async because involves sending payload to API and other await operations which take time
+  //Future<void> because method will eventually complete and either not return a value(void) if successful or return an error
   Future<void> _sendPayloadToAPI() async {
     // Prepare device information
     String ip_address = '';
