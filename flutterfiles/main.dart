@@ -13,7 +13,7 @@ import 'gauges.dart';
 import 'raw.dart';
 import 'package:http/http.dart' as http;
 
-void main() {
+void main() { //entry point of program
   runApp(const MyApp());
 }
 
