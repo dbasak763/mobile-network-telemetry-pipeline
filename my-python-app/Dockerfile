@@ -11,5 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the app code to the container
 COPY . .
 
-# Set the entrypoint command to run your Python application
-CMD [ "python", "app.py" ]
+# A threaded process preserves an accurate in-process Prometheus registry; GKE
+# provides process-level horizontal scaling. All versions were available in 2023.
+ENV GUNICORN_WORKERS=1
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:5050 --workers ${GUNICORN_WORKERS} --threads 32 --timeout 30 app:app"]
