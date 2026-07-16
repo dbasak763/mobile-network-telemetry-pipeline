@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: my-python-app-helm-release-my-python-app-chart
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: my-python-app
@@ -11,19 +11,62 @@ spec:
     metadata:
       labels:
         app: my-python-app
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "5050"
     spec:
       containers:
         - name: my-python-app
           image: gcr.io/soy-vision-389617/my-python-app-server:v3
           imagePullPolicy: Always
           ports:
-            - containerPort: 5050
+            - name: http
+              containerPort: 5050
               protocol: TCP
+          env:
+            - name: TELEMETRY_QUEUE_SIZE
+              value: "100000"
+            - name: TELEMETRY_PUBLISH_BATCH_SIZE
+              value: "1000"
+            - name: TELEMETRY_FLUSH_SECONDS
+              value: "0.1"
+            - name: PUBSUB_TOPIC_PATH
+              value: projects/soy-vision-389617/topics/highway9-telemetry
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: highway9-openai
+                  key: api-key
+                  optional: true
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 2
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+            limits:
+              cpu: "2"
+              memory: "1Gi"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: my-python-app-service
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "80"
 spec:
   type: LoadBalancer
   selector:
