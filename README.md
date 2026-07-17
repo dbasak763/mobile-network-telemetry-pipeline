@@ -1,4 +1,4 @@
-# Highway9 Kubernetes Data
+# Mobile Network Telemetry Pipeline - Highway9
 
 Mobile-to-cloud telemetry prototype built from July through September 2023. A
 Flutter Android client collects LTE signal and location data, a Flask API
