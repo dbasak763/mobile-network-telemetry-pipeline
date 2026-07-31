@@ -1,15 +1,14 @@
 # Mobile Network Telemetry Pipeline - Highway9
 
-Mobile-to-cloud telemetry prototype built from July through September 2023. A
+Mobile-to-cloud telemetry prototype built from July 2023 through September 2025. A
 Flutter Android client collects LTE signal and location data, a Flask API
 validates and buffers the events, and GKE runs the ingestion and real-time
 monitoring stack.
 
 > Historical note: this repository preserves the original 2023 prototype and
-> its rough edges. The later repository refresh represents a delayed upload from
-> a local project folder; it does not change the dates when the project work was
-> performed. Dependency and platform choices stay within what was available in
-> 2023.
+> preserves some of its original rough edges. Development and refinement continued through September 2025, 
+> including the later repository refresh. 
+> Some dependency and platform choices remain intentionally pinned to their original 2023 versions.
 
 ## What it demonstrates
 
